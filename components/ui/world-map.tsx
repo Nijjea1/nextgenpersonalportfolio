@@ -4,7 +4,7 @@ import DottedMap from "dotted-map";
 import { motion } from "motion/react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 interface MapProps {
   dots?: Array<{
@@ -18,24 +18,33 @@ export default function WorldMap({
   dots = [],
   lineColor = "#0ea5e9",
 }: MapProps) {
-  const [mounted, setMounted] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
-  const map = new DottedMap({ height: 100, grid: "diagonal" });
-
   const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
+  const map = useMemo(
+    () =>
+      new DottedMap({
+        height: 100,
+        grid: "diagonal",
+      }),
+    [],
+  );
 
-  const svgMap = map.getSVG({
-    radius: 0.22,
-    color: theme === "dark" ? "#FFFFFF40" : "#00000040",
-    shape: "circle",
-    backgroundColor: "transparent",
-  });
+  const svgMap = useMemo(
+    () =>
+      map.getSVG({
+        radius: 0.22,
+        color: theme === "dark" ? "#FFFFFF40" : "#00000040",
+        shape: "circle",
+        backgroundColor: "transparent",
+      }),
+    [map, theme],
+  );
 
   const projectPoint = (lat: number, lng: number) => {
     const x = (lng + 180) * (800 / 360);
@@ -52,11 +61,16 @@ export default function WorldMap({
     return `M ${start.x} ${start.y} Q ${midX} ${midY} ${end.x} ${end.y}`;
   };
 
-  // Create unique identifiers for dots to avoid index-based keys
   const dotsWithIds = dots.map((dot, i) => ({
     ...dot,
     id: `dot-${dot.start.lat}-${dot.start.lng}-${dot.end.lat}-${dot.end.lng}-${i}`,
   }));
+
+  if (!mounted) {
+    return (
+      <div className="w-full aspect-[2/1] rounded-lg relative font-sans" />
+    );
+  }
 
   return (
     <div className="w-full aspect-[2/1] rounded-lg relative font-sans">
@@ -75,18 +89,10 @@ export default function WorldMap({
         aria-label="Interactive world map with connection paths"
       >
         <title>World Map Connections</title>
-        {dotsWithIds.map((dot) => {
+        {dotsWithIds.map((dot, index) => {
           const startPoint = projectPoint(dot.start.lat, dot.start.lng);
           const endPoint = projectPoint(dot.end.lat, dot.end.lng);
-          const dotIndex = dots.indexOf(
-            dots.find(
-              (d) =>
-                d.start.lat === dot.start.lat &&
-                d.start.lng === dot.start.lng &&
-                d.end.lat === dot.end.lat &&
-                d.end.lng === dot.end.lng,
-            ) as (typeof dots)[0],
-          );
+
           return (
             <g key={`path-group-${dot.id}`}>
               <motion.path
@@ -102,7 +108,7 @@ export default function WorldMap({
                 }}
                 transition={{
                   duration: 1,
-                  delay: 0.5 * dotIndex,
+                  delay: 0.5 * index,
                   ease: "easeOut",
                 }}
               />
