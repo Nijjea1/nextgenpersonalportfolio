@@ -3,6 +3,7 @@ import Image from "next/image";
 import { defineQuery } from "next-sanity";
 import { urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
+import { TiltCard } from "@/components/ui/TiltCard";
 
 const EXPERIENCE_QUERY =
   defineQuery(`*[_type == "experience"] | order(startDate desc){
@@ -56,7 +57,7 @@ export async function ExperienceSection() {
               {/* Timeline dot */}
               <div className="absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-primary border-4 border-background" />
 
-              <div className="@container/card bg-card border rounded-lg p-4 @md/card:p-6 hover:shadow-lg transition-shadow">
+              <TiltCard className="@container/card bg-card border rounded-lg p-4 @md/card:p-6 hover:shadow-lg transition-shadow">
                 <div className="flex flex-col @md/card:flex-row @md/card:items-start gap-4 mb-4">
                   {exp.companyLogo && (
                     <div className="relative w-12 h-12 @md/card:w-16 @md/card:h-16 rounded-lg overflow-hidden border shrink-0">
@@ -157,7 +158,7 @@ export async function ExperienceSection() {
                     })}
                   </div>
                 )}
-              </div>
+              </TiltCard>
             </div>
           ))}
         </div>

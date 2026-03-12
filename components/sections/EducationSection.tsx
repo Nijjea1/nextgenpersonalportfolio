@@ -4,6 +4,7 @@ import Link from "next/link";
 import { defineQuery } from "next-sanity";
 import { urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
+import { TiltCard } from "@/components/ui/TiltCard";
 
 const EDUCATION_QUERY =
   defineQuery(`*[_type == "education"] | order(endDate desc, startDate desc){
@@ -66,7 +67,7 @@ export async function EducationSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {education.map((edu) => (
-            <div
+            <TiltCard
               key={`${edu.institution}-${edu.degree}-${edu.startDate}`}
               className="group relative bg-card border rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300"
             >
@@ -164,7 +165,7 @@ export async function EducationSection() {
                   </Link>
                 )}
               </div>
-            </div>
+            </TiltCard>
           ))}
         </div>
       </div>
