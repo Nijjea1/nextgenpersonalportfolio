@@ -58,24 +58,7 @@ export async function ContactSection() {
                 </div>
               )}
 
-              {profile.phone && (
-                <div className="flex items-start gap-3 @md/info:gap-4">
-                  <div className="w-10 h-10 @md/info:w-12 @md/info:h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <span className="text-xl @md/info:text-2xl">📱</span>
-                  </div>
-                  <div className="min-w-0">
-                    <h4 className="font-semibold mb-1 text-sm @md/info:text-base">
-                      Phone
-                    </h4>
-                    <Link
-                      href={`tel:${profile.phone}`}
-                      className="text-muted-foreground hover:text-primary transition-colors text-xs @md/info:text-sm"
-                    >
-                      {profile.phone}
-                    </Link>
-                  </div>
-                </div>
-              )}
+              {/* Phone block intentionally hidden */}
 
               {profile.location && (
                 <div className="flex items-start gap-3 @md/info:gap-4">
@@ -98,13 +81,13 @@ export async function ContactSection() {
                   <h4 className="font-semibold mb-4 text-sm @md/info:text-base">
                     Follow Me
                   </h4>
-                  <div className="flex flex-wrap gap-2 @md/info:gap-3">
+                  <div className="grid grid-cols-2 gap-2 @md/info:gap-3">
                     {profile.socialLinks.github && (
                       <Link
                         href={profile.socialLinks.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
+                        className="w-full text-center px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
                       >
                         GitHub
                       </Link>
@@ -114,37 +97,37 @@ export async function ContactSection() {
                         href={profile.socialLinks.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
+                        className="w-full text-center px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
                       >
                         LinkedIn
                       </Link>
                     )}
-                    {profile.socialLinks.twitter && (
+                    {/* {profile.socialLinks.twitter && (
                       <Link
                         href={profile.socialLinks.twitter}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
+                        className="w-full text-center px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
                       >
                         Twitter
                       </Link>
-                    )}
-                    {profile.socialLinks.website && (
+                    )} */}
+                    {/* {profile.socialLinks.website && (
                       <Link
                         href={profile.socialLinks.website}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
+                        className="w-full text-center px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
                       >
                         Website
                       </Link>
-                    )}
+                    )} */}
                     {profile.socialLinks.medium && (
                       <Link
                         href={profile.socialLinks.medium}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
+                        className="w-full text-center px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
                       >
                         Medium
                       </Link>
@@ -154,7 +137,7 @@ export async function ContactSection() {
                         href={profile.socialLinks.devto}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
+                        className="w-full text-center px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
                       >
                         Dev.to
                       </Link>
@@ -164,7 +147,7 @@ export async function ContactSection() {
                         href={profile.socialLinks.youtube}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
+                        className="w-full text-center px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
                       >
                         YouTube
                       </Link>

@@ -66,13 +66,13 @@ export async function HeroSection() {
               </p>
 
               {profile.socialLinks && (
-                <div className="flex flex-wrap gap-3 @md/hero:gap-4 pt-4">
+                <div className="w-full flex flex-wrap gap-3 @md/hero:gap-4 pt-4">
                   {profile.socialLinks.github && (
                     <Link
                       href={profile.socialLinks.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-4 py-2 @md/hero:px-6 @md/hero:py-3 rounded-lg border hover:bg-accent transition-colors text-sm @md/hero:text-base"
+                      className="flex-1 text-center px-4 py-2 @md/hero:px-6 @md/hero:py-3 rounded-lg border hover:bg-accent transition-colors text-sm @md/hero:text-base"
                     >
                       GitHub
                     </Link>
@@ -82,12 +82,12 @@ export async function HeroSection() {
                       href={profile.socialLinks.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-4 py-2 @md/hero:px-6 @md/hero:py-3 rounded-lg border hover:bg-accent transition-colors text-sm @md/hero:text-base"
+                      className="flex-1 text-center px-4 py-2 @md/hero:px-6 @md/hero:py-3 rounded-lg border hover:bg-accent transition-colors text-sm @md/hero:text-base"
                     >
                       LinkedIn
                     </Link>
                   )}
-                  {profile.socialLinks.twitter && (
+                  {/* {profile.socialLinks.twitter && (
                     <Link
                       href={profile.socialLinks.twitter}
                       target="_blank"
@@ -96,8 +96,8 @@ export async function HeroSection() {
                     >
                       Twitter
                     </Link>
-                  )}
-                  {profile.socialLinks.website && (
+                  )} */}
+                  {/* {profile.socialLinks.website && (
                     <Link
                       href={profile.socialLinks.website}
                       target="_blank"
@@ -106,7 +106,7 @@ export async function HeroSection() {
                     >
                       Website
                     </Link>
-                  )}
+                  )} */}
                 </div>
               )}
 
@@ -126,7 +126,7 @@ export async function HeroSection() {
                 {profile.availability && (
                   <div className="flex items-center gap-2">
                     <span>✅</span>
-                    <span>{profile.availability}</span>
+                    <span>Open to connecting</span>
                   </div>
                 )}
               </div>
