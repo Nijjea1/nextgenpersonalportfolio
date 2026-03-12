@@ -25,6 +25,7 @@ export async function FloatingDock() {
       "#achievements",
       "#blog",
     ]);
+    if (!item.href) return false;
     return !hiddenHrefs.has(item.href);
   });
 
