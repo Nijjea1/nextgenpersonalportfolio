@@ -12,6 +12,7 @@ interface NavItem {
   href?: string | null;
   icon?: string | null;
   isExternal?: boolean | null;
+  prominent?: boolean | null;
 }
 
 interface FloatingDockClientProps {
@@ -24,6 +25,7 @@ interface DockLink {
   icon: React.ReactNode;
   isExternal?: boolean | null;
   onClick?: () => void;
+  prominent?: boolean;
 }
 
 const MAX_VISIBLE_ITEMS_DESKTOP = 6;
@@ -54,6 +56,7 @@ export function FloatingDockClient({ navItems }: FloatingDockClientProps) {
       href: item.href || "#",
       icon: <DynamicIcon iconName={item.icon || "IconHome"} />,
       isExternal: item.isExternal,
+      prominent: Boolean(item.prominent),
     })),
     ...(isSignedIn && !isSidebarOpen
       ? [
@@ -214,10 +217,16 @@ function DockIcon({
   isVertical: boolean;
   onItemClick?: () => void;
 }) {
+  const prominent = item.prominent === true;
+
   const baseIconClasses =
     "relative flex items-center justify-center w-full h-full rounded-full backdrop-blur-md transition-all";
-  const verticalIconClasses = `${baseIconClasses} bg-white/40 dark:bg-white/20 border border-white/50 dark:border-white/30 duration-300 hover:scale-110 hover:bg-white/50 dark:hover:bg-white/30 hover:border-white/70 dark:hover:border-white/40`;
-  const horizontalIconClasses = `${baseIconClasses} bg-white/10 dark:bg-white/5 group-hover/dock:bg-white/40 dark:group-hover/dock:bg-white/20 border border-white/20 dark:border-white/10 group-hover/dock:border-white/50 dark:group-hover/dock:border-white/30 duration-500 ease-out hover:scale-125 hover:-translate-y-2 md:hover:-translate-y-3 hover:!bg-white/50 dark:hover:!bg-white/30 hover:!border-white/70 dark:hover:!border-white/40 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)]`;
+  const verticalIconClasses = prominent
+    ? `${baseIconClasses} bg-primary/20 dark:bg-primary/30 border-2 border-primary/50 dark:border-primary/40 ring-2 ring-primary/30 duration-300 hover:scale-110 hover:bg-primary/30 dark:hover:bg-primary/40 hover:ring-primary/50`
+    : `${baseIconClasses} bg-white/40 dark:bg-white/20 border border-white/50 dark:border-white/30 duration-300 hover:scale-110 hover:bg-white/50 dark:hover:bg-white/30 hover:border-white/70 dark:hover:border-white/40`;
+  const horizontalIconClasses = prominent
+    ? `${baseIconClasses} bg-primary/25 dark:bg-primary/35 border-2 border-primary/55 dark:border-primary/45 ring-2 ring-primary/35 shadow-md duration-500 ease-out hover:scale-125 hover:-translate-y-2 md:hover:-translate-y-3 hover:!bg-primary/35 dark:hover:!bg-primary/45 hover:!border-primary/70 hover:!ring-primary/50 hover:shadow-lg`
+    : `${baseIconClasses} bg-white/10 dark:bg-white/5 group-hover/dock:bg-white/40 dark:group-hover/dock:bg-white/20 border border-white/20 dark:border-white/10 group-hover/dock:border-white/50 dark:group-hover/dock:border-white/30 duration-500 ease-out hover:scale-125 hover:-translate-y-2 md:hover:-translate-y-3 hover:!bg-white/50 dark:hover:!bg-white/30 hover:!border-white/70 dark:hover:!border-white/40 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)]`;
 
   const Tooltip = ({ direction }: { direction: "vertical" | "horizontal" }) => {
     const isHorizontal = direction === "horizontal";
@@ -253,10 +262,16 @@ function DockIcon({
     <>
       <div className={isVertical ? verticalIconClasses : horizontalIconClasses}>
         <div
-          className={`w-6 h-6 md:w-6 md:h-6 ${
+          className={`${
+            prominent ? "w-7 h-7 md:w-7 md:h-7" : "w-6 h-6 md:w-6 md:h-6"
+          } ${
             isVertical
-              ? "text-neutral-500 dark:text-neutral-300"
-              : "text-neutral-400/60 group-hover/dock:text-neutral-500 dark:text-neutral-300/60 dark:group-hover/dock:text-neutral-300 group-hover:!text-neutral-600 dark:group-hover:!text-neutral-200 transition-colors duration-300"
+              ? prominent
+                ? "text-primary dark:text-primary"
+                : "text-neutral-500 dark:text-neutral-300"
+              : prominent
+                ? "text-primary dark:text-primary group-hover/dock:text-primary"
+                : "text-neutral-400/60 group-hover/dock:text-neutral-500 dark:text-neutral-300/60 dark:group-hover/dock:text-neutral-300 group-hover:!text-neutral-600 dark:group-hover:!text-neutral-200 transition-colors duration-300"
           }`}
         >
           {item.icon}
@@ -266,8 +281,9 @@ function DockIcon({
     </>
   );
 
-  const wrapperClasses =
-    "group relative flex items-center justify-center w-12 h-12 md:w-12 md:h-12";
+  const wrapperClasses = prominent
+    ? "group relative flex items-center justify-center w-14 h-14 md:w-14 md:h-14"
+    : "group relative flex items-center justify-center w-12 h-12 md:w-12 md:h-12";
 
   return item.onClick ? (
     <button type="button" onClick={handleClick} className={wrapperClasses}>

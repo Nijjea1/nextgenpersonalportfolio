@@ -10,11 +10,19 @@ const NAVIGATION_QUERY =
   isExternal
 }`);
 
+const RESUME_NAV_ITEM = {
+  title: "Resume",
+  href: "/resume.pdf",
+  icon: "IconFileTypePdf",
+  isExternal: true,
+  prominent: true,
+} as const;
+
 export async function FloatingDock() {
   const { data: navItems } = await sanityFetch({ query: NAVIGATION_QUERY });
 
   if (!navItems || navItems.length === 0) {
-    return null;
+    return <FloatingDockClient navItems={[RESUME_NAV_ITEM]} />;
   }
 
   const filteredNavItems = navItems.filter((item) => {
@@ -29,9 +37,10 @@ export async function FloatingDock() {
     return !hiddenHrefs.has(item.href);
   });
 
-  if (filteredNavItems.length === 0) {
-    return null;
-  }
+  const dockItems =
+    filteredNavItems.length === 0
+      ? [RESUME_NAV_ITEM]
+      : [RESUME_NAV_ITEM, ...filteredNavItems];
 
-  return <FloatingDockClient navItems={filteredNavItems} />;
+  return <FloatingDockClient navItems={dockItems} />;
 }

@@ -10,6 +10,7 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { ModeToggle } from "@/components/DarkModeToggle";
 import { DisableDraftMode } from "@/components/DisableDraftMode";
 import { FloatingDock } from "@/components/FloatingDock";
+import { ReloadAfterClerkSignIn } from "@/components/ReloadAfterClerkSignIn";
 import SidebarToggle from "@/components/SidebarToggle";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
@@ -49,6 +50,7 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <ReloadAfterClerkSignIn />
             <Script
               src="https://cdn.platform.openai.com/deployments/chatkit/chatkit.js"
               strategy="afterInteractive"

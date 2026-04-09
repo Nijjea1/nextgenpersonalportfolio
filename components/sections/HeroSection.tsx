@@ -66,27 +66,37 @@ export async function HeroSection() {
               </p>
 
               {profile.socialLinks && (
-                <div className="w-full flex flex-wrap gap-3 @md/hero:gap-4 pt-4">
-                  {profile.socialLinks.github && (
-                    <Link
-                      href={profile.socialLinks.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 text-center px-4 py-2 @md/hero:px-6 @md/hero:py-3 rounded-lg border hover:bg-accent transition-colors text-sm @md/hero:text-base"
-                    >
-                      GitHub
-                    </Link>
-                  )}
-                  {profile.socialLinks.linkedin && (
-                    <Link
-                      href={profile.socialLinks.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 text-center px-4 py-2 @md/hero:px-6 @md/hero:py-3 rounded-lg border hover:bg-accent transition-colors text-sm @md/hero:text-base"
-                    >
-                      LinkedIn
-                    </Link>
-                  )}
+                <div className="w-full flex flex-col items-center gap-3 @md/hero:gap-4 pt-4">
+                  <div className="w-full flex flex-wrap gap-3 @md/hero:gap-4">
+                    {profile.socialLinks.github && (
+                      <Link
+                        href={profile.socialLinks.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 text-center px-4 py-2 @md/hero:px-6 @md/hero:py-3 rounded-lg border hover:bg-accent transition-colors text-sm @md/hero:text-base"
+                      >
+                        GitHub
+                      </Link>
+                    )}
+                    {profile.socialLinks.linkedin && (
+                      <Link
+                        href={profile.socialLinks.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 text-center px-4 py-2 @md/hero:px-6 @md/hero:py-3 rounded-lg border hover:bg-accent transition-colors text-sm @md/hero:text-base"
+                      >
+                        LinkedIn
+                      </Link>
+                    )}
+                  </div>
+                  <Link
+                    href="/resume.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full max-w-xs text-center px-4 py-2 @md/hero:px-6 @md/hero:py-3 rounded-lg border border-primary/50 bg-primary/5 hover:bg-primary/10 transition-colors text-sm @md/hero:text-base font-medium"
+                  >
+                    Resume
+                  </Link>
                   {/* {profile.socialLinks.twitter && (
                     <Link
                       href={profile.socialLinks.twitter}
