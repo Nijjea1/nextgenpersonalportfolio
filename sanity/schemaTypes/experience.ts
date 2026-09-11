@@ -77,6 +77,29 @@ export default defineType({
       description: "Quantifiable accomplishments",
     }),
     defineField({
+      name: "sections",
+      title: "Detailed Sections (tabbed)",
+      type: "array",
+      description:
+        "Optional. When present, these render as clickable tabs in the experience card.",
+      of: [
+        {
+          type: "object",
+          fields: [
+            { name: "title", title: "Title", type: "string" },
+            { name: "icon", title: "Icon (emoji)", type: "string" },
+            {
+              name: "bullets",
+              title: "Bullets",
+              type: "array",
+              of: [{ type: "string" }],
+            },
+          ],
+          preview: { select: { title: "title" } },
+        },
+      ],
+    }),
+    defineField({
       name: "technologies",
       title: "Technologies Used",
       type: "array",

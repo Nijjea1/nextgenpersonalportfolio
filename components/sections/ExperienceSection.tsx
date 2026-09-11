@@ -4,9 +4,10 @@ import { defineQuery } from "next-sanity";
 import { urlFor } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { TiltCard } from "@/components/ui/TiltCard";
+import { ExperienceTabs } from "./ExperienceTabs";
 
 const EXPERIENCE_QUERY =
-  defineQuery(`*[_type == "experience"] | order(startDate desc){
+  defineQuery(`*[_type == "experience"] | order(current desc, startDate desc){
   company,
   position,
   employmentType,
@@ -17,6 +18,7 @@ const EXPERIENCE_QUERY =
   description,
   responsibilities,
   achievements,
+  sections[]{title, icon, bullets},
   technologies[]->{name, category},
   companyLogo,
   companyWebsite
@@ -112,32 +114,48 @@ export async function ExperienceSection() {
                   </div>
                 )}
 
-                {exp.responsibilities && exp.responsibilities.length > 0 && (
+                {exp.sections && exp.sections.length > 0 ? (
                   <div className="mb-4">
-                    <h4 className="font-semibold mb-2 text-sm @md/card:text-base">
-                      Key Responsibilities:
-                    </h4>
-                    <ul className="list-disc list-inside space-y-1 text-muted-foreground text-xs @md/card:text-sm">
-                      {exp.responsibilities.map((resp, idx) => (
-                        <li key={`${exp.company}-resp-${idx}`}>{resp}</li>
-                      ))}
-                    </ul>
+                    <ExperienceTabs
+                      sections={exp.sections.map((s) => ({
+                        title: s?.title ?? "",
+                        icon: s?.icon ?? null,
+                        bullets: (s?.bullets ?? []).filter(
+                          (b): b is string => !!b,
+                        ),
+                      }))}
+                    />
                   </div>
-                )}
+                ) : (
+                  <>
+                    {exp.responsibilities && exp.responsibilities.length > 0 && (
+                      <div className="mb-4">
+                        <h4 className="font-semibold mb-2 text-sm @md/card:text-base">
+                          Key Responsibilities:
+                        </h4>
+                        <ul className="list-disc list-inside space-y-1 text-muted-foreground text-xs @md/card:text-sm">
+                          {exp.responsibilities.map((resp, idx) => (
+                            <li key={`${exp.company}-resp-${idx}`}>{resp}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
 
-                {exp.achievements && exp.achievements.length > 0 && (
-                  <div className="mb-4">
-                    <h4 className="font-semibold mb-2 text-sm @md/card:text-base">
-                      Achievements:
-                    </h4>
-                    <ul className="list-disc list-inside space-y-1 text-muted-foreground text-xs @md/card:text-sm">
-                      {exp.achievements.map((achievement, idx) => (
-                        <li key={`${exp.company}-achievement-${idx}`}>
-                          {achievement}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                    {exp.achievements && exp.achievements.length > 0 && (
+                      <div className="mb-4">
+                        <h4 className="font-semibold mb-2 text-sm @md/card:text-base">
+                          Achievements:
+                        </h4>
+                        <ul className="list-disc list-inside space-y-1 text-muted-foreground text-xs @md/card:text-sm">
+                          {exp.achievements.map((achievement, idx) => (
+                            <li key={`${exp.company}-achievement-${idx}`}>
+                              {achievement}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </>
                 )}
 
                 {exp.technologies && exp.technologies.length > 0 && (

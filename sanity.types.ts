@@ -109,22 +109,6 @@ export type SiteSettings = {
   maintenanceMessage?: string;
 };
 
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
-};
-
 export type Contact = {
   _id: string;
   _type: "contact";
@@ -196,12 +180,6 @@ export type Service = {
   timeline?: string;
   featured?: boolean;
   order?: number;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
 };
 
 export type Blog = {
@@ -401,6 +379,12 @@ export type Experience = {
   }>;
   responsibilities?: Array<string>;
   achievements?: Array<string>;
+  sections?: Array<{
+    title?: string;
+    icon?: string;
+    bullets?: Array<string>;
+    _key: string;
+  }>;
   technologies?: Array<{
     _ref: string;
     _type: "reference";
@@ -567,15 +551,20 @@ export type SanityImageDimensions = {
   aspectRatio?: number;
 };
 
-export type SanityImageMetadata = {
-  _type: "sanity.imageMetadata";
-  location?: Geopoint;
-  dimensions?: SanityImageDimensions;
-  palette?: SanityImagePalette;
-  lqip?: string;
-  blurHash?: string;
-  hasAlpha?: boolean;
-  isOpaque?: boolean;
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
 };
 
 export type SanityFileAsset = {
@@ -598,13 +587,6 @@ export type SanityFileAsset = {
   path?: string;
   url?: string;
   source?: SanityAssetSourceData;
-};
-
-export type SanityAssetSourceData = {
-  _type: "sanity.assetSourceData";
-  name?: string;
-  id?: string;
-  url?: string;
 };
 
 export type SanityImageAsset = {
@@ -630,6 +612,17 @@ export type SanityImageAsset = {
   source?: SanityAssetSourceData;
 };
 
+export type SanityImageMetadata = {
+  _type: "sanity.imageMetadata";
+  location?: Geopoint;
+  dimensions?: SanityImageDimensions;
+  palette?: SanityImagePalette;
+  lqip?: string;
+  blurHash?: string;
+  hasAlpha?: boolean;
+  isOpaque?: boolean;
+};
+
 export type Geopoint = {
   _type: "geopoint";
   lat?: number;
@@ -637,7 +630,20 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = Navigation | SiteSettings | SanityImageCrop | SanityImageHotspot | Contact | Service | Slug | Blog | Achievement | Certification | Testimonial | Education | Experience | Skill | Project | Profile | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
+};
+
+export type SanityAssetSourceData = {
+  _type: "sanity.assetSourceData";
+  name?: string;
+  id?: string;
+  url?: string;
+};
+
+export type AllSanitySchemaTypes = Navigation | SiteSettings | Contact | Service | Blog | Achievement | Certification | Testimonial | Education | Experience | Skill | Project | Profile | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./components/FloatingDock.tsx
 // Variable: NAVIGATION_QUERY
@@ -653,7 +659,7 @@ export type NAVIGATION_QUERYResult = Array<{
 // Variable: CHAT_PROFILE_QUERY
 // Query: *[_id == "singleton-profile"][0]{    _id,    _type,    _createdAt,    _updatedAt,    _rev,    firstName,    lastName,    headline,    shortBio,    email,    phone,    location,    availability,    socialLinks,    yearsOfExperience,    profileImage  }
 export type CHAT_PROFILE_QUERYResult = {
-  _id: "singleton-profile";
+  _id: string;
   _type: "achievement";
   _createdAt: string;
   _updatedAt: string;
@@ -670,7 +676,7 @@ export type CHAT_PROFILE_QUERYResult = {
   yearsOfExperience: null;
   profileImage: null;
 } | {
-  _id: "singleton-profile";
+  _id: string;
   _type: "blog";
   _createdAt: string;
   _updatedAt: string;
@@ -687,7 +693,7 @@ export type CHAT_PROFILE_QUERYResult = {
   yearsOfExperience: null;
   profileImage: null;
 } | {
-  _id: "singleton-profile";
+  _id: string;
   _type: "certification";
   _createdAt: string;
   _updatedAt: string;
@@ -704,7 +710,7 @@ export type CHAT_PROFILE_QUERYResult = {
   yearsOfExperience: null;
   profileImage: null;
 } | {
-  _id: "singleton-profile";
+  _id: string;
   _type: "contact";
   _createdAt: string;
   _updatedAt: string;
@@ -721,7 +727,7 @@ export type CHAT_PROFILE_QUERYResult = {
   yearsOfExperience: null;
   profileImage: null;
 } | {
-  _id: "singleton-profile";
+  _id: string;
   _type: "education";
   _createdAt: string;
   _updatedAt: string;
@@ -738,7 +744,7 @@ export type CHAT_PROFILE_QUERYResult = {
   yearsOfExperience: null;
   profileImage: null;
 } | {
-  _id: "singleton-profile";
+  _id: string;
   _type: "experience";
   _createdAt: string;
   _updatedAt: string;
@@ -755,7 +761,7 @@ export type CHAT_PROFILE_QUERYResult = {
   yearsOfExperience: null;
   profileImage: null;
 } | {
-  _id: "singleton-profile";
+  _id: string;
   _type: "navigation";
   _createdAt: string;
   _updatedAt: string;
@@ -772,7 +778,7 @@ export type CHAT_PROFILE_QUERYResult = {
   yearsOfExperience: null;
   profileImage: null;
 } | {
-  _id: "singleton-profile";
+  _id: string;
   _type: "profile";
   _createdAt: string;
   _updatedAt: string;
@@ -810,7 +816,7 @@ export type CHAT_PROFILE_QUERYResult = {
     _type: "image";
   } | null;
 } | {
-  _id: "singleton-profile";
+  _id: string;
   _type: "project";
   _createdAt: string;
   _updatedAt: string;
@@ -827,7 +833,7 @@ export type CHAT_PROFILE_QUERYResult = {
   yearsOfExperience: null;
   profileImage: null;
 } | {
-  _id: "singleton-profile";
+  _id: string;
   _type: "sanity.fileAsset";
   _createdAt: string;
   _updatedAt: string;
@@ -844,7 +850,7 @@ export type CHAT_PROFILE_QUERYResult = {
   yearsOfExperience: null;
   profileImage: null;
 } | {
-  _id: "singleton-profile";
+  _id: string;
   _type: "sanity.imageAsset";
   _createdAt: string;
   _updatedAt: string;
@@ -861,7 +867,7 @@ export type CHAT_PROFILE_QUERYResult = {
   yearsOfExperience: null;
   profileImage: null;
 } | {
-  _id: "singleton-profile";
+  _id: string;
   _type: "service";
   _createdAt: string;
   _updatedAt: string;
@@ -878,7 +884,7 @@ export type CHAT_PROFILE_QUERYResult = {
   yearsOfExperience: null;
   profileImage: null;
 } | {
-  _id: "singleton-profile";
+  _id: string;
   _type: "siteSettings";
   _createdAt: string;
   _updatedAt: string;
@@ -895,7 +901,7 @@ export type CHAT_PROFILE_QUERYResult = {
   yearsOfExperience: null;
   profileImage: null;
 } | {
-  _id: "singleton-profile";
+  _id: string;
   _type: "skill";
   _createdAt: string;
   _updatedAt: string;
@@ -912,7 +918,7 @@ export type CHAT_PROFILE_QUERYResult = {
   yearsOfExperience: number | null;
   profileImage: null;
 } | {
-  _id: "singleton-profile";
+  _id: string;
   _type: "testimonial";
   _createdAt: string;
   _updatedAt: string;
@@ -1148,7 +1154,7 @@ export type EDUCATION_QUERYResult = Array<{
 
 // Source: ./components/sections/ExperienceSection.tsx
 // Variable: EXPERIENCE_QUERY
-// Query: *[_type == "experience"] | order(startDate desc){  company,  position,  employmentType,  location,  startDate,  endDate,  current,  description,  responsibilities,  achievements,  technologies[]->{name, category},  companyLogo,  companyWebsite}
+// Query: *[_type == "experience"] | order(current desc, startDate desc){  company,  position,  employmentType,  location,  startDate,  endDate,  current,  description,  responsibilities,  achievements,  sections[]{title, icon, bullets},  technologies[]->{name, category},  companyLogo,  companyWebsite}
 export type EXPERIENCE_QUERYResult = Array<{
   company: string | null;
   position: string | null;
@@ -1177,6 +1183,11 @@ export type EXPERIENCE_QUERYResult = Array<{
   }> | null;
   responsibilities: Array<string> | null;
   achievements: Array<string> | null;
+  sections: Array<{
+    title: string | null;
+    icon: string | null;
+    bullets: Array<string> | null;
+  }> | null;
   technologies: Array<{
     name: string | null;
     category: "ai-ml" | "backend" | "cloud" | "database" | "design" | "devops" | "frontend" | "mobile" | "other" | "soft-skills" | "testing" | "tools" | null;
@@ -1443,7 +1454,7 @@ declare module "@sanity/client" {
     "*[_type == \"certification\"] | order(issueDate desc){\n  name,\n  issuer,\n  issueDate,\n  expiryDate,\n  credentialId,\n  credentialUrl,\n  logo,\n  description,\n  skills[]->{name, category},\n  order\n}": CERTIFICATIONS_QUERYResult;
     "*[_id == \"singleton-profile\"][0]{\n  email,\n  phone,\n  location,\n  socialLinks\n}": PROFILE_QUERYResult;
     "*[_type == \"education\"] | order(endDate desc, startDate desc){\n  institution,\n  degree,\n  fieldOfStudy,\n  startDate,\n  endDate,\n  current,\n  gpa,\n  description,\n  achievements,\n  logo,\n  website,\n  order\n}": EDUCATION_QUERYResult;
-    "*[_type == \"experience\"] | order(startDate desc){\n  company,\n  position,\n  employmentType,\n  location,\n  startDate,\n  endDate,\n  current,\n  description,\n  responsibilities,\n  achievements,\n  technologies[]->{name, category},\n  companyLogo,\n  companyWebsite\n}": EXPERIENCE_QUERYResult;
+    "*[_type == \"experience\"] | order(current desc, startDate desc){\n  company,\n  position,\n  employmentType,\n  location,\n  startDate,\n  endDate,\n  current,\n  description,\n  responsibilities,\n  achievements,\n  sections[]{title, icon, bullets},\n  technologies[]->{name, category},\n  companyLogo,\n  companyWebsite\n}": EXPERIENCE_QUERYResult;
     "*[_id == \"singleton-profile\"][0]{\n  firstName,\n  lastName,\n  headline,\n  headlineStaticText,\n  headlineAnimatedWords,\n  headlineAnimationDuration,\n  shortBio,\n  email,\n  phone,\n  location,\n  availability,\n  socialLinks,\n  yearsOfExperience,\n  profileImage\n}": HERO_QUERYResult;
     "*[_type == \"project\" && featured == true] | order(order asc)[0...30]{\n  title,\n  slug,\n  tagline,\n  category,\n  liveUrl,\n  githubUrl,\n  coverImage,\n  technologies[]->{name, category, color}\n}": PROJECTS_QUERYResult;
     "*[_type == \"service\"] | order(order asc, _createdAt desc){\n  title,\n  slug,\n  icon,\n  shortDescription,\n  fullDescription,\n  features,\n  technologies[]->{name, category},\n  deliverables,\n  pricing,\n  timeline,\n  featured,\n  order\n}": SERVICES_QUERYResult;
