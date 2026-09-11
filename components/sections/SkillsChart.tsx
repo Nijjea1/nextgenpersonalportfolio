@@ -18,14 +18,7 @@ import {
   Users,
   Waypoints,
 } from "lucide-react";
-import {
-  motion,
-  type MotionValue,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from "motion/react";
-import { useRef } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import {
   siAngular,
   siC,
@@ -160,7 +153,10 @@ const ORDER = [
 function labelFor(c: string) {
   return (
     CATEGORY_LABEL[c] ??
-    c.split("-").map((w) => w[0].toUpperCase() + w.slice(1)).join(" ")
+    c
+      .split("-")
+      .map((w) => w[0].toUpperCase() + w.slice(1))
+      .join(" ")
   );
 }
 function safeColor(hex: string) {
@@ -170,7 +166,7 @@ function safeColor(hex: string) {
   const b = parseInt(h.slice(4, 6), 16);
   return 0.299 * r + 0.587 * g + 0.114 * b < 55 ? "currentColor" : `#${h}`;
 }
-// deterministic pseudo-random so SSR and client match (no hydration mismatch)
+// deterministic pseudo-random so SSR and client match
 function rand(seed: number) {
   const x = Math.sin(seed * 127.1 + 311.7) * 43758.5453;
   return x - Math.floor(x);
@@ -179,31 +175,35 @@ function rand(seed: number) {
 function SkillBadge({
   skill,
   seed,
-  progress,
+  index,
   reduced,
 }: {
   skill: Skill;
   seed: number;
-  progress: MotionValue<number>;
+  index: number;
   reduced: boolean;
 }) {
   const key = (skill.name || "").toLowerCase().trim();
   const si = SI_MAP[key];
   const Fallback = si ? null : (LUCIDE_MAP[key] ?? Code2);
 
-  // scattered start position -> settles to 0 as you scroll
-  const sx = (rand(seed) - 0.5) * 460;
-  const sy = (rand(seed + 7.3) - 0.5) * 240;
-  const srot = (rand(seed + 1.9) - 0.5) * 70;
-
-  const x = useTransform(progress, [0, 0.85], [sx, 0]);
-  const y = useTransform(progress, [0, 0.85], [sy, 0]);
-  const rotate = useTransform(progress, [0, 0.85], [srot, 0]);
-  const opacity = useTransform(progress, [0, 0.35], [0, 1]);
+  // scattered start; floats to place when the badge scrolls into view
+  const sx = (rand(seed) - 0.5) * 260;
+  const sy = (rand(seed + 7.3) - 0.5) * 150;
+  const srot = (rand(seed + 1.9) - 0.5) * 45;
 
   return (
     <motion.span
-      style={reduced ? undefined : { x, y, rotate, opacity }}
+      initial={reduced ? false : { opacity: 0, x: sx, y: sy, rotate: srot }}
+      whileInView={
+        reduced ? undefined : { opacity: 1, x: 0, y: 0, rotate: 0 }
+      }
+      viewport={{ once: true, amount: 0.6, margin: "0px 0px -12% 0px" }}
+      transition={{
+        duration: 0.7,
+        ease: [0.22, 1, 0.36, 1],
+        delay: (index % 8) * 0.05,
+      }}
       className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-3.5 py-2.5 text-sm shadow-sm transition-colors hover:border-primary/50"
     >
       {si ? (
@@ -227,12 +227,7 @@ function SkillBadge({
 }
 
 export function SkillsChart({ skills }: SkillsChartProps) {
-  const ref = useRef<HTMLDivElement | null>(null);
   const reduced = useReducedMotion() ?? false;
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "start center"],
-  });
 
   if (!skills || skills.length === 0) return null;
 
@@ -247,7 +242,7 @@ export function SkillsChart({ skills }: SkillsChartProps) {
 
   let seed = 1;
   return (
-    <div ref={ref} className="space-y-12">
+    <div className="space-y-12">
       {categories.map(([category, list]) => (
         <div key={category}>
           <div className="mb-5 flex items-center gap-3">
@@ -260,14 +255,14 @@ export function SkillsChart({ skills }: SkillsChartProps) {
             </span>
           </div>
           <div className="flex flex-wrap gap-3">
-            {list.map((s) => {
+            {list.map((s, i) => {
               seed += 1;
               return (
                 <SkillBadge
                   key={s.name}
                   skill={s}
                   seed={seed}
-                  progress={scrollYProgress}
+                  index={i}
                   reduced={reduced}
                 />
               );
