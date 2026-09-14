@@ -29,6 +29,20 @@ export default defineType({
       validation: (Rule) => Rule.max(150),
     }),
     defineField({
+      name: "overview",
+      title: "Case Study Overview",
+      type: "text",
+      rows: 4,
+      description: "A short paragraph shown on the project's case-study page",
+    }),
+    defineField({
+      name: "highlights",
+      title: "Case Study Highlights",
+      type: "array",
+      of: [{ type: "string" }],
+      description: "Key features / accomplishments (bullet points)",
+    }),
+    defineField({
       name: "coverImage",
       title: "Cover Image",
       type: "image",

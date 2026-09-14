@@ -40,7 +40,16 @@ function Card({ p }: { p: ProjectItem }) {
             </span>
           )}
           <h3 className="text-lg @md/card:text-xl font-semibold mb-2 line-clamp-2">
-            {p.title || "Untitled Project"}
+            {p.slug ? (
+              <Link
+                href={`/projects/${p.slug}`}
+                className="transition-colors hover:text-primary"
+              >
+                {p.title || "Untitled Project"}
+              </Link>
+            ) : (
+              (p.title ?? "Untitled Project")
+            )}
           </h3>
           <p className="text-muted-foreground text-xs @md/card:text-sm line-clamp-2">
             {p.tagline}
@@ -65,7 +74,15 @@ function Card({ p }: { p: ProjectItem }) {
           </div>
         )}
 
-        <div className="flex flex-col @xs/card:flex-row gap-2 @xs/card:gap-3 pt-2">
+        <div className="flex flex-wrap items-center gap-3 pt-2">
+          {p.slug && (
+            <Link
+              href={`/projects/${p.slug}`}
+              className="text-sm font-medium text-primary hover:underline"
+            >
+              Case study →
+            </Link>
+          )}
           {p.liveUrl && (
             <Link
               href={p.liveUrl}

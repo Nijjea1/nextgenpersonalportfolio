@@ -432,6 +432,8 @@ export type Project = {
   title?: string;
   slug?: Slug;
   tagline?: string;
+  overview?: string;
+  highlights?: Array<string>;
   coverImage?: {
     asset?: {
       _ref: string;
@@ -645,6 +647,35 @@ export type SanityAssetSourceData = {
 
 export type AllSanitySchemaTypes = Navigation | SiteSettings | Contact | Service | Blog | Achievement | Certification | Testimonial | Education | Experience | Skill | Project | Profile | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./app/projects/[slug]/page.tsx
+// Variable: PROJECT_QUERY
+// Query: *[_type == "project" && slug.current == $slug][0]{  title,  tagline,  category,  overview,  highlights,  liveUrl,  githubUrl,  coverImage,  technologies[]->{name}}
+export type PROJECT_QUERYResult = {
+  title: string | null;
+  tagline: string | null;
+  category: "ai-ml" | "api-backend" | "browser-extension" | "cli-tool" | "desktop-app" | "devops" | "game" | "mobile-app" | "open-source" | "other" | "web-app" | null;
+  overview: string | null;
+  highlights: Array<string> | null;
+  liveUrl: string | null;
+  githubUrl: string | null;
+  coverImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  technologies: Array<{
+    name: string | null;
+  }> | null;
+} | null;
+
 // Source: ./components/FloatingDock.tsx
 // Variable: NAVIGATION_QUERY
 // Query: *[_type == "navigation"] | order(order asc){  title,  href,  icon,  isExternal}
@@ -938,46 +969,16 @@ export type CHAT_PROFILE_QUERYResult = {
 
 // Source: ./components/sections/AboutSection.tsx
 // Variable: ABOUT_QUERY
-// Query: *[_id == "singleton-profile"][0]{  firstName,  lastName,  fullBio,  yearsOfExperience,  stats,  email,  phone,  location}
+// Query: *[_id == "singleton-profile"][0]{  fullBio,  stats,  location}
 export type ABOUT_QUERYResult = {
-  firstName: null;
-  lastName: null;
   fullBio: null;
-  yearsOfExperience: null;
   stats: null;
-  email: null;
-  phone: null;
   location: null;
 } | {
-  firstName: null;
-  lastName: null;
   fullBio: null;
-  yearsOfExperience: number | null;
   stats: null;
-  email: null;
-  phone: null;
-  location: null;
-} | {
-  firstName: null;
-  lastName: null;
-  fullBio: null;
-  yearsOfExperience: null;
-  stats: null;
-  email: null;
-  phone: null;
   location: string | null;
 } | {
-  firstName: null;
-  lastName: null;
-  fullBio: null;
-  yearsOfExperience: null;
-  stats: null;
-  email: string | null;
-  phone: null;
-  location: null;
-} | {
-  firstName: string | null;
-  lastName: string | null;
   fullBio: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -996,14 +997,11 @@ export type ABOUT_QUERYResult = {
     _type: "block";
     _key: string;
   }> | null;
-  yearsOfExperience: number | null;
   stats: Array<{
     label?: string;
     value?: string;
     _key: string;
   }> | null;
-  email: string | null;
-  phone: string | null;
   location: string | null;
 } | null;
 
@@ -1446,9 +1444,10 @@ export type TESTIMONIALS_QUERYResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    "*[_type == \"project\" && slug.current == $slug][0]{\n  title,\n  tagline,\n  category,\n  overview,\n  highlights,\n  liveUrl,\n  githubUrl,\n  coverImage,\n  technologies[]->{name}\n}": PROJECT_QUERYResult;
     "*[_type == \"navigation\"] | order(order asc){\n  title,\n  href,\n  icon,\n  isExternal\n}": NAVIGATION_QUERYResult;
     "*[_id == \"singleton-profile\"][0]{\n    _id,\n    _type,\n    _createdAt,\n    _updatedAt,\n    _rev,\n    firstName,\n    lastName,\n    headline,\n    shortBio,\n    email,\n    phone,\n    location,\n    availability,\n    socialLinks,\n    yearsOfExperience,\n    profileImage\n  }": CHAT_PROFILE_QUERYResult;
-    "*[_id == \"singleton-profile\"][0]{\n  firstName,\n  lastName,\n  fullBio,\n  yearsOfExperience,\n  stats,\n  email,\n  phone,\n  location\n}": ABOUT_QUERYResult;
+    "*[_id == \"singleton-profile\"][0]{\n  fullBio,\n  stats,\n  location\n}": ABOUT_QUERYResult;
     "*[_type == \"achievement\"] | order(date desc){\n  title,\n  type,\n  issuer,\n  date,\n  description,\n  image,\n  url,\n  featured,\n  order\n}": ACHIEVEMENTS_QUERYResult;
     "*[_type == \"blog\"] | order(publishedAt desc){\n  title,\n  slug,\n  excerpt,\n  category,\n  tags,\n  publishedAt,\n  readTime,\n  featuredImage\n}": BLOG_QUERYResult;
     "*[_type == \"certification\"] | order(issueDate desc){\n  name,\n  issuer,\n  issueDate,\n  expiryDate,\n  credentialId,\n  credentialUrl,\n  logo,\n  description,\n  skills[]->{name, category},\n  order\n}": CERTIFICATIONS_QUERYResult;
