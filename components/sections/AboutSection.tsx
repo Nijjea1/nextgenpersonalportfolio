@@ -30,15 +30,15 @@ export async function AboutSection() {
 
   return (
     <section id="about" className="py-20 px-6">
-      <div className="container mx-auto max-w-5xl">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">About Me</h2>
-          <p className="text-xl text-muted-foreground">Get to know me better</p>
+      <div className="container mx-auto max-w-4xl">
+        <div className="text-center mb-10">
+          <h2 className="text-4xl md:text-5xl font-bold mb-3">About Me</h2>
+          <p className="text-lg text-muted-foreground">Get to know me better</p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:auto-rows-[minmax(0,1fr)]">
-          {/* Bio - large tile */}
-          <div className="col-span-2 md:row-span-2 flex flex-col rounded-2xl border border-border bg-card/50 p-6 md:p-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
+          {/* Bio - left */}
+          <div className="flex flex-col rounded-2xl border border-border bg-card/50 p-6">
             <div className="mb-3 flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-primary">
               <Sparkles className="h-4 w-4" /> Who I am
             </div>
@@ -49,56 +49,47 @@ export async function AboutSection() {
             </div>
           </div>
 
-          {/* First two stats (right column on desktop) */}
-          {stats.slice(0, 2).map((s) => (
-            <div
-              key={s.label}
-              className="flex flex-col justify-center rounded-2xl border border-border bg-gradient-to-br from-primary/10 to-transparent p-6"
-            >
-              <div className="text-3xl font-bold text-primary">{s.value}</div>
-              <div className="mt-1 text-sm text-muted-foreground">
-                {s.label}
+          {/* Right column: stats grid + currently */}
+          <div className="flex flex-col gap-4">
+            {stats.length > 0 && (
+              <div className="grid grid-cols-2 gap-4">
+                {stats.map((s) => (
+                  <div
+                    key={s.label}
+                    className="rounded-2xl border border-border bg-gradient-to-br from-primary/10 to-transparent p-5"
+                  >
+                    <div className="text-2xl font-bold text-primary">
+                      {s.value}
+                    </div>
+                    <div className="mt-1 text-xs text-muted-foreground">
+                      {s.label}
+                    </div>
+                  </div>
+                ))}
               </div>
+            )}
+            <div className="flex-1 rounded-2xl border border-primary/30 bg-primary/5 p-5">
+              <div className="mb-1.5 flex items-center gap-2">
+                <Rocket className="h-4 w-4 text-primary" />
+                <span className="text-sm font-semibold">Currently</span>
+              </div>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                Building at the intersection of AI, embedded systems, and
+                full-stack web - and open to co-op and new-grad opportunities.
+              </p>
             </div>
-          ))}
-
-          {/* Currently */}
-          <div className="col-span-2 rounded-2xl border border-primary/30 bg-primary/5 p-6">
-            <div className="mb-2 flex items-center gap-2">
-              <Rocket className="h-5 w-5 text-primary" />
-              <span className="font-semibold">Currently</span>
-            </div>
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              Building at the intersection of AI, embedded systems, and
-              full-stack web - and open to co-op and new-grad opportunities.
-            </p>
           </div>
 
-          {/* Remaining stats */}
-          {stats.slice(2).map((s) => (
-            <div
-              key={s.label}
-              className="flex flex-col justify-center rounded-2xl border border-border bg-gradient-to-br from-primary/10 to-transparent p-6"
-            >
-              <div className="text-2xl md:text-3xl font-bold text-primary">
-                {s.value}
-              </div>
-              <div className="mt-1 text-sm text-muted-foreground">
-                {s.label}
-              </div>
-            </div>
-          ))}
-
-          {/* Quick facts */}
-          <div className="col-span-2 md:col-span-3 flex flex-wrap items-center gap-x-8 gap-y-3 rounded-2xl border border-border bg-card/50 px-6 py-5 text-sm text-muted-foreground">
+          {/* Quick facts - full width strip */}
+          <div className="md:col-span-2 flex flex-wrap items-center gap-x-6 gap-y-2 rounded-2xl border border-border bg-card/50 px-6 py-4 text-sm text-muted-foreground">
             {profile.location && (
               <span className="inline-flex items-center gap-2">
                 <MapPin className="h-4 w-4 text-primary" /> {profile.location}
               </span>
             )}
             <span className="inline-flex items-center gap-2">
-              <GraduationCap className="h-4 w-4 text-primary" /> McMaster
-              University - Computer Engineering (Co-op)
+              <GraduationCap className="h-4 w-4 text-primary" /> McMaster - Computer
+              Engineering (Co-op)
             </span>
             <span className="inline-flex items-center gap-2">
               <Cpu className="h-4 w-4 text-primary" /> AI · Embedded · Web
