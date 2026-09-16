@@ -36,7 +36,7 @@ export async function AboutSection() {
           <p className="text-lg text-muted-foreground">Get to know me better</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:items-start">
           {/* Bio - left */}
           <div className="flex flex-col rounded-2xl border border-border bg-card/50 p-6">
             <div className="mb-3 flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-primary">
@@ -68,14 +68,12 @@ export async function AboutSection() {
                 ))}
               </div>
             )}
-            <div className="flex-1 rounded-2xl border border-primary/30 bg-primary/5 p-5">
-              <div className="mb-1.5 flex items-center gap-2">
-                <Rocket className="h-4 w-4 text-primary" />
-                <span className="text-sm font-semibold">Currently</span>
-              </div>
-              <p className="text-sm leading-relaxed text-muted-foreground">
+            <div className="flex items-start gap-3 rounded-2xl border border-primary/30 bg-primary/5 px-4 py-3.5">
+              <Rocket className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+              <p className="text-sm leading-snug text-muted-foreground">
+                <span className="font-semibold text-foreground">Currently: </span>
                 Building at the intersection of AI, embedded systems, and
-                full-stack web - and open to co-op and new-grad opportunities.
+                full-stack web, and open to co-op and new-grad opportunities.
               </p>
             </div>
           </div>
